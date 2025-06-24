@@ -1,0 +1,71 @@
+services:
+  mysql:
+    image: mysql:9.2.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - db_network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17.4-alpine3.21
+    container_name: postgres_container
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - db_network
+    restart: unless-stopped
+    
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_container
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Password123!
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - db_network
+    restart: unless-stopped
+    
+  mongodb:
+    image: mongo:8.0.6
+    container_name: mongodb_container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: mydb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - db_network
+    restart: unless-stopped
+
+networks:
+  db_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  postgres_data:
+  sqlserver_data:
+  mongodb_data:

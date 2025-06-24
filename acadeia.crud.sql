@@ -37,47 +37,62 @@ INSERT INTO modalidades (nome) VALUES
 ('Spinning'),
 ('Boxe'),
 ('Funcional'),
-('Hidroginástica'),
-('Aeróbica'),
-('Dança'),
-('Tai Chi Chuan'),
-('Alongamento');
+('Hidroginástica');
 
 -- Inserir aulas
 INSERT INTO aulas (id, id_modalidade, id_professor, data_hora, limite_alunos) VALUES 
-(UUID(), 1, (SELECT id FROM professores WHERE nome = 'Maria Souza'), '2025-07-01 08:00:00', 15),
-(UUID(), 1, (SELECT id FROM professores WHERE nome = 'Maria Souza'), '2025-07-01 10:00:00', 15),
+(UUID(), 1, (SELECT id FROM professores WHERE nome = 'Maria Souza'), '2025-07-01 08:00:00', 10),
 (UUID(), 2, (SELECT id FROM professores WHERE nome = 'Carlos Alberto'), '2025-07-01 09:00:00', 10),
-(UUID(), 3, (SELECT id FROM professores WHERE nome = 'Ana Paula'), '2025-07-01 07:00:00', 12),
-(UUID(), 4, (SELECT id FROM professores WHERE nome = 'Roberto Silva'), '2025-07-01 06:00:00', 8),
-(UUID(), 5, (SELECT id FROM professores WHERE nome = 'Juliana Fernandes'), '2025-07-01 18:00:00', 20),
-(UUID(), 6, (SELECT id FROM professores WHERE nome = 'Marcos Andrade'), '2025-07-01 19:00:00', 12),
-(UUID(), 7, (SELECT id FROM professores WHERE nome = 'Patricia Lima'), '2025-07-01 17:00:00', 15),
-(UUID(), 8, (SELECT id FROM professores WHERE nome = 'Felipe Santos'), '2025-07-01 20:00:00', 10),
-(UUID(), 9, (SELECT id FROM professores WHERE nome = 'Carla Menezes'), '2025-07-01 16:00:00', 14),
-(UUID(), 10, (SELECT id FROM professores WHERE nome = 'Diego Costa'), '2025-07-01 14:00:00', 12),
-(UUID(), 1, (SELECT id FROM professores WHERE nome = 'Maria Souza'), '2025-07-02 08:00:00', 15),
-(UUID(), 3, (SELECT id FROM professores WHERE nome = 'Ana Paula'), '2025-07-02 07:00:00', 12),
-(UUID(), 5, (SELECT id FROM professores WHERE nome = 'Juliana Fernandes'), '2025-07-02 18:00:00', 20),
-(UUID(), 7, (SELECT id FROM professores WHERE nome = 'Patricia Lima'), '2025-07-02 17:00:00', 15);
+(UUID(), 3, (SELECT id FROM professores WHERE nome = 'Ana Paula'), '2025-07-01 10:00:00', 10),
+(UUID(), 4, (SELECT id FROM professores WHERE nome = 'Roberto Silva'), '2025-07-01 11:00:00', 10),
+(UUID(), 5, (SELECT id FROM professores WHERE nome = 'Juliana Fernandes'), '2025-07-01 12:00:00', 10),
+(UUID(), 6, (SELECT id FROM professores WHERE nome = 'Marcos Andrade'), '2025-07-01 13:00:00', 10),
+(UUID(), 7, (SELECT id FROM professores WHERE nome = 'Patricia Lima'), '2025-07-01 14:00:00', 10),
+(UUID(), 8, (SELECT id FROM professores WHERE nome = 'Felipe Santos'), '2025-07-01 15:00:00', 10),
+(UUID(), 9, (SELECT id FROM professores WHERE nome = 'Carla Menezes'), '2025-07-01 16:00:00', 10),
+(UUID(), 10, (SELECT id FROM professores WHERE nome = 'Diego Costa'), '2025-07-01 17:00:00', 10);
 
 -- Inserir agendamentos (alunos em aulas)
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES 
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 08:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'João Silva')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 08:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Maria Santos')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 10:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Pedro Oliveira')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 09:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Ana Costa')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 07:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Carlos Ferreira')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 18:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Juliana Lima')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 19:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Rafael Almeida')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 17:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Camila Rodrigues')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 20:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Lucas Pereira')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 16:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Fernanda Gomes')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 08:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Pedro Oliveira')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-01 07:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Juliana Lima')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-02 08:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'João Silva')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-02 07:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Ana Costa')),
-((SELECT id FROM aulas WHERE data_hora = '2025-07-02 18:00:00' LIMIT 1), (SELECT id FROM alunos WHERE nome = 'Maria Santos'));
+-- Utilizando variáveis para evitar erro de trigger no MySQL (não pode atualizar a mesma tabela referenciada na subquery)
+SET @aula_id1 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 08:00:00' LIMIT 1);
+SET @aluno_id1 = (SELECT id FROM alunos WHERE nome = 'João Silva');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id1, @aluno_id1);
+
+SET @aula_id2 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 09:00:00' LIMIT 1);
+SET @aluno_id2 = (SELECT id FROM alunos WHERE nome = 'Maria Santos');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id2, @aluno_id2);
+
+SET @aula_id3 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 10:00:00' LIMIT 1);
+SET @aluno_id3 = (SELECT id FROM alunos WHERE nome = 'Pedro Oliveira');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id3, @aluno_id3);
+
+SET @aula_id4 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 11:00:00' LIMIT 1);
+SET @aluno_id4 = (SELECT id FROM alunos WHERE nome = 'Ana Costa');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id4, @aluno_id4);
+
+SET @aula_id5 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 12:00:00' LIMIT 1);
+SET @aluno_id5 = (SELECT id FROM alunos WHERE nome = 'Carlos Ferreira');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id5, @aluno_id5);
+
+SET @aula_id6 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 13:00:00' LIMIT 1);
+SET @aluno_id6 = (SELECT id FROM alunos WHERE nome = 'Juliana Lima');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id6, @aluno_id6);
+
+SET @aula_id7 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 14:00:00' LIMIT 1);
+SET @aluno_id7 = (SELECT id FROM alunos WHERE nome = 'Rafael Almeida');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id7, @aluno_id7);
+
+SET @aula_id8 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 15:00:00' LIMIT 1);
+SET @aluno_id8 = (SELECT id FROM alunos WHERE nome = 'Camila Rodrigues');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id8, @aluno_id8);
+
+SET @aula_id9 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 16:00:00' LIMIT 1);
+SET @aluno_id9 = (SELECT id FROM alunos WHERE nome = 'Lucas Pereira');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id9, @aluno_id9);
+
+SET @aula_id10 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 17:00:00' LIMIT 1);
+SET @aluno_id10 = (SELECT id FROM alunos WHERE nome = 'Fernanda Gomes');
+INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id10, @aluno_id10);
 
 -- CRUD de UPDATE
 
@@ -98,11 +113,6 @@ UPDATE alunos SET data_nascimento = '2000-01-15' WHERE nome = 'João Silva';
 
 -- Atualizar horário de uma aula
 UPDATE aulas SET data_hora = '2025-07-01 08:30:00' WHERE data_hora = '2025-07-01 08:00:00' AND id_modalidade = 1;
-
--- Atualizar contador de alunos registrados
-UPDATE aulas SET alunos_registrados = (
-    SELECT COUNT(*) FROM agendamentos WHERE agendamentos.id_aula = aulas.id
-) WHERE id IS NOT NULL;
 
 -- CRUD de DELETE
 

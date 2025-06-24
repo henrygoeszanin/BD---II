@@ -18,3 +18,5 @@ docker compose up mysql -d
    Cria as views para facilitar consultas e relatórios.
 5. **acadeia.crud.sql**  
    Insere dados de exemplo e demonstra operações CRUD.
+6. **academia.commands.sql**
+   Executar comandos e verificar funcionalidades de operações e do banco.

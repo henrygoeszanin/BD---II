@@ -1,3 +1,6 @@
+CREATE Database IF NOT EXISTS academia;
+
+USE academia;
 -- Habilitar suporte a UUID no MySQL (não é necessário extensão extra)
 -- Tabela de alunos
 CREATE TABLE alunos (

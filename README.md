@@ -43,6 +43,10 @@ Este projeto implementa o banco de dados de uma academia, permitindo o cadastro 
 Consulte o arquivo `sequencia de execucao.md` para a ordem correta de execução dos scripts e inicialização do ambiente Docker.
 
 ## Observações
-- O banco utiliza UUID (CHAR(36)) como chave primária para alunos, professores e aulas.
-- O ambiente padrão utiliza MySQL, mas há exemplos de configuração para outros bancos no `docker-compose.yml`.
-- Adapte os scripts conforme necessário para outros SGBDs.
+- Chaves Primárias:
+  - **alunos**: `id` (UUID - CHAR(36))
+  - **professores**: `id` (UUID - CHAR(36))
+  - **aulas**: `id` (UUID - CHAR(36))
+  - **modalidades**: `id` (INT AUTO_INCREMENT)
+  - **agendamentos**: `id` (INT AUTO_INCREMENT)
+- O ambiente padrão utiliza MySQL.

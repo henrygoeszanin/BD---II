@@ -52,47 +52,46 @@ INSERT INTO aulas (id, id_modalidade, id_professor, data_hora, limite_alunos) VA
 (UUID(), 9, (SELECT id FROM professores WHERE nome = 'Carla Menezes'), '2025-07-01 16:00:00', 10),
 (UUID(), 10, (SELECT id FROM professores WHERE nome = 'Diego Costa'), '2025-07-01 17:00:00', 10);
 
--- Inserir agendamentos (alunos em aulas)
--- Utilizando variáveis para evitar erro de trigger no MySQL (não pode atualizar a mesma tabela referenciada na subquery)
+-- Inserir agendamentos (alunos em aulas) usando a procedure
 SET @aula_id1 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 08:00:00' LIMIT 1);
 SET @aluno_id1 = (SELECT id FROM alunos WHERE nome = 'João Silva');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id1, @aluno_id1);
+CALL sp_agendar_aluno(@aula_id1, @aluno_id1);
 
 SET @aula_id2 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 09:00:00' LIMIT 1);
 SET @aluno_id2 = (SELECT id FROM alunos WHERE nome = 'Maria Santos');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id2, @aluno_id2);
+CALL sp_agendar_aluno(@aula_id2, @aluno_id2);
 
 SET @aula_id3 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 10:00:00' LIMIT 1);
 SET @aluno_id3 = (SELECT id FROM alunos WHERE nome = 'Pedro Oliveira');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id3, @aluno_id3);
+CALL sp_agendar_aluno(@aula_id3, @aluno_id3);
 
 SET @aula_id4 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 11:00:00' LIMIT 1);
 SET @aluno_id4 = (SELECT id FROM alunos WHERE nome = 'Ana Costa');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id4, @aluno_id4);
+CALL sp_agendar_aluno(@aula_id4, @aluno_id4);
 
 SET @aula_id5 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 12:00:00' LIMIT 1);
 SET @aluno_id5 = (SELECT id FROM alunos WHERE nome = 'Carlos Ferreira');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id5, @aluno_id5);
+CALL sp_agendar_aluno(@aula_id5, @aluno_id5);
 
 SET @aula_id6 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 13:00:00' LIMIT 1);
 SET @aluno_id6 = (SELECT id FROM alunos WHERE nome = 'Juliana Lima');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id6, @aluno_id6);
+CALL sp_agendar_aluno(@aula_id6, @aluno_id6);
 
 SET @aula_id7 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 14:00:00' LIMIT 1);
 SET @aluno_id7 = (SELECT id FROM alunos WHERE nome = 'Rafael Almeida');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id7, @aluno_id7);
+CALL sp_agendar_aluno(@aula_id7, @aluno_id7);
 
 SET @aula_id8 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 15:00:00' LIMIT 1);
 SET @aluno_id8 = (SELECT id FROM alunos WHERE nome = 'Camila Rodrigues');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id8, @aluno_id8);
+CALL sp_agendar_aluno(@aula_id8, @aluno_id8);
 
 SET @aula_id9 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 16:00:00' LIMIT 1);
 SET @aluno_id9 = (SELECT id FROM alunos WHERE nome = 'Lucas Pereira');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id9, @aluno_id9);
+CALL sp_agendar_aluno(@aula_id9, @aluno_id9);
 
 SET @aula_id10 = (SELECT id FROM aulas WHERE data_hora = '2025-07-01 17:00:00' LIMIT 1);
 SET @aluno_id10 = (SELECT id FROM alunos WHERE nome = 'Fernanda Gomes');
-INSERT INTO agendamentos (id_aula, id_aluno) VALUES (@aula_id10, @aluno_id10);
+CALL sp_agendar_aluno(@aula_id10, @aluno_id10);
 
 -- CRUD de UPDATE
 

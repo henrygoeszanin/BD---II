@@ -16,7 +16,11 @@ docker compose up mysql -d
    Cria funções auxiliares para consultas e validações.
 4. **academia.views.sql**  
    Cria as views para facilitar consultas e relatórios.
-5. **acadeia.crud.sql**  
+5. **academia.procedure.sql**
+   Cria as procedures
+6. **academia.constaints.sql**
+   Cria as restrições para o banco
+7. **academia.crud.sql**  
    Insere dados de exemplo e demonstra operações CRUD.
-6. **academia.commands.sql**
+8. **academia.commands.sql**
    Executar comandos e verificar funcionalidades de operações e do banco.
